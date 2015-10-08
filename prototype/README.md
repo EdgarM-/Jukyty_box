@@ -6,10 +6,10 @@ synthesizer.
 ### Done
 
 * Basic structure.
+* Functional Web Audio API basic set-up.
 
 ### TODO
 
-* Functional Web Audio API basic set-up.
 * Basic preset synthesizer.
 * Customization options to alter the synthesizer.
 * Selectable presets for the synthesizer.
