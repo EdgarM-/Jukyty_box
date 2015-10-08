@@ -1,5 +1,18 @@
-(function (){
-	var Synthesizer = (function (){
+(function () {
+	// Utility function (from jQuery implementation)
+	var each = function (obj, callback){
+		var value,
+			i = 0,
+			length = obj.length;
+		for (; i < length; ++i) {
+			value = callback.call(obj[i], i, obj[i]);
+			if (value === false) {
+				break;
+			}
+		}
+	};
+
+	var Synthesizer = (function () {
 		/*
 		 * Main variables 
 		 */
@@ -11,6 +24,7 @@
 		var playing;
 		
 		// Synth AudioNodes
+		var oscillators = []; // Experimental
 		var oscillator;
 		var gainNode;
 		var soundOut;
@@ -20,7 +34,7 @@
 		 */
 		
 		// Constructor
-		var Synthesizer = function(){
+		var Synthesizer = function () {
 			// Initializing main variables and Web Audio context
 			MyAudioContext = window.AudioContext || window.webkitAudioContext;
 			audioCtx = new MyAudioContext();
@@ -30,14 +44,31 @@
 			
 			setupAudioNodes();
 			 
-			setupEventListeners();		
+			setupEventListeners();
 		};
 		
 		var setupAudioNodes = function () {
 			// Oscillator setup
+			each("osc1 osc2".split(" "), function (num, name) {
+				// Populate the oscillator
+				oscillators[num] = {
+						name: name,
+						audioNode: audioCtx.createOscillator(),
+						gainNode: audioCtx.createGain()
+				};
+				// Setup the defaults for the oscillator
+				oscillators[num].gainNode.gain.value = 0;
+				// Connect the basic components of the oscillator
+				oscillators[num].audioNode.connect(oscillators[num].gainNode);
+				// Start the oscillator
+				//oscillators[num].audioNode.start();
+			});
+
 			oscillator = audioCtx.createOscillator();
-			oscillator.type = 'sine';
+			oscillator.type = 'triangle';
 			
+			console.log(oscillators);
+
 			// Gain setup
 			gainNode = audioCtx.createGain();
 			gainNode.gain.value = 0;
@@ -57,14 +88,14 @@
 			document.addEventListener('keyup', stopSound);
 		};
 		
-		var playSound = function (event){
+		var playSound = function (event) {
 			if (!playing) {
 				playing = true;
 				// Read the pressed key
 				var key = event.which;
 				
-				oscillator.frequency.value = key * 2;
-				gainNode.gain.value = 1;
+				oscillator.frequency.value = key * 3;
+				gainNode.gain.value = 5;
 				
 				console.log('Sound playing');
 			}	
@@ -80,6 +111,10 @@
 			}
 		};
 		
+		/* 
+		 * Utility methods
+		 */
+
 		return Synthesizer;
 	})();
 	
