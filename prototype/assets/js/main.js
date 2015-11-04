@@ -124,11 +124,69 @@
 			document.addEventListener('keydown', playSound);
 			document.addEventListener('keyup', stopSound);
 		};
+	
 		
+		$('.white').mousedown(function(){
+			if (!playing) {
+				// Read the pressed key
+				var key = $(this).attr('id');
+				//console.log(event.srcElement);	
+				if(notes[key]) {
+					playing = true;
+					
+					oscillator.frequency.value = notes[key];
+					gainNode.gain.value = 5;
+					
+					console.log('Sound playing ' + key);
+				}
+			}
+
+		});
+
+		$('.white').mouseup(function(){
+			if (playing) {
+				playing = false;
+				
+				gainNode.gain.value = 0;
+				
+				console.log('Sound Stopped');
+			}
+
+		});
+
+		$('.black').mousedown(function(){
+			if (!playing) {
+				// Read the pressed key
+				var key = $(this).attr('id');
+				//console.log(event.srcElement);	
+				if(notes[key]) {
+					playing = true;
+					
+					oscillator.frequency.value = notes[key];
+					gainNode.gain.value = 5;
+					
+					console.log('Sound playing ' + key);
+				}
+			}
+
+		});
+
+		$('.black').mouseup(function(){
+			if (playing) {
+				playing = false;
+				
+				gainNode.gain.value = 0;
+				
+				console.log('Sound Stopped');
+			}
+
+		});
+
 		var playSound = function (event) {
 			if (!playing) {
 				// Read the pressed key
 				var key = event.which;
+				//console.log(event.srcElement);	
 				if(notes[key]) {
 					playing = true;
 					
