@@ -11,6 +11,43 @@
 			}
 		}
 	};
+	
+	// Keyboard to note to frequency mapping
+	var notes = {
+		81:  262, // q C4
+		50:  278, // 2 
+		87:  294, // w 
+		51:  311, // 3
+		69:  330, // e
+		82:  349, // r
+		53:  370, // 5
+		84:  392, // t
+		54:  415, // 6
+		89:  440, // y
+		55:  466, // 7
+		85:  494, // u E4
+		73:  523, // i C5
+		57:  554, // 9
+		79:  587, // o
+		48:  622, // 0
+		80:  659, // p E5
+		65:  104, // a G2#
+		90:  110, // z
+		83:  117, // s
+		88:  124, // x E2
+		67:  131, // c C3
+		70:  139, // f
+		86:  147, // v
+		71:  156, // g
+		66:  165, // b
+		78:  175, // n
+		74:  185, // j
+		77:  196, // m
+		75:  208, // k
+		188: 220, // ,
+		76:  233, // l
+		190: 247  // . E3
+	};
 
 	var Synthesizer = (function () {
 		/*
@@ -90,14 +127,16 @@
 		
 		var playSound = function (event) {
 			if (!playing) {
-				playing = true;
 				// Read the pressed key
 				var key = event.which;
-				
-				oscillator.frequency.value = key * 3;
-				gainNode.gain.value = 5;
-				
-				console.log('Sound playing');
+				if(notes[key]) {
+					playing = true;
+					
+					oscillator.frequency.value = notes[key];
+					gainNode.gain.value = 5;
+					
+					console.log('Sound playing ' + key);
+				}
 			}	
 		};
 		
