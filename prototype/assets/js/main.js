@@ -49,6 +49,28 @@
 		190: 247  // . E3
 	};
 
+
+	// this is a C major scale 
+	var frequencies = [
+	'261.63',  // c4
+	'293.66',  // d4
+	'329.63',  // e4
+	'349.23',  // f4
+	'392.00',  // g4
+	'440.00',  // a4
+	'493.88',  // b4
+	'523.25',  // c5
+	'587.33',  // d5
+	'659.25',  // e5
+	'698.46',  // f5
+	'783.99',  // g5
+	'880.00',  // a5
+	'987.77',  // b5 
+	'1046.50', // c6
+	'1174.66']  // d6
+
+	frequencies.reverse();
+
 	var Synthesizer = (function () {
 		/*
 		 * Main variables 
@@ -79,12 +101,14 @@
 			// Prevents sound overlap at press.
 			playing = false;
 			
-			setupAudioNodes();
+			loopSound()
 			 
 			setupEventListeners();
 		};
 		
-		var setupAudioNodes = function () {
+		var setupAudioNodes = function (index) {
+			time = audioCtx.currentTime;
+  			fadeout = 1;
 			// Oscillator setup
 			each("osc1 osc2 osc3 osc4 osc5 osc6 osc7 ocs8".split(" "), function (num, name) {
 				// Populate the oscillator
@@ -103,12 +127,17 @@
 
 			oscillator = audioCtx.createOscillator();
 			oscillator.type = 'sine';
-			
-			console.log(oscillators);
 
 			// Gain setup
 			gainNode = audioCtx.createGain();
-			gainNode.gain.value = 0;
+			gainNode.gain.value = frequencies[index];
+
+			oscillator.start(time);
+			oscillator.stop(time + fadeout);
+			
+			console.log(oscillators);
+
+			
 			
 			// Destination init
 			soundOut = audioCtx.destination;
@@ -117,7 +146,7 @@
 			gainNode.connect(soundOut);
 			oscillator.connect(gainNode);
 			
-			oscillator.start();
+			
 		};
 		
 		var setupEventListeners = function () {
@@ -125,7 +154,9 @@
 			document.addEventListener('keyup', stopSound);
 		};
 
-		var playSound = function (event) {
+		var playSound = function (evnet) {
+			
+
 			if (!playing) {
 				// Read the pressed key
 				var key = event.which;
@@ -151,11 +182,35 @@
 			}
 		};
 		
+		function loopSound() {
+		  // Kick off the loop. Each column represents 125ms worth of time.
+		  $(".grid").children().each(function(index){
+		    var i = $(this);
+		    //console.log('grid elem: ' + i);
+		    setTimeout(function() { 
+		      playNotesInColumn(i)
+		    }, index * 125); 
+		  });
+		}
+
+		function playNotesInColumn($elem) {
+		  $elem.children(':checked').each(function() {
+		    setupAudioNodes($(this).val() - 1);
+		  });
+
+		  // Repeat this column every 2 seconds, since there are 16 columns at 125ms intervals. 
+		  // This simple implementation of timeout isn't really a long term solution, it will start 
+		  // lagging eventually if cpu is processing other things when timeout is supposed to fire
+		  setTimeout(function() {
+		   playNotesInColumn($elem) 
+		  }, 2000);
+		}
+
 		/* 
 		 * Utility methods
 		 */
 
-		
+
 		return Synthesizer;
 	})();
 	
