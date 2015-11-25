@@ -86,7 +86,7 @@
 		
 		var setupAudioNodes = function () {
 			// Oscillator setup
-			each("osc1 osc2".split(" "), function (num, name) {
+			each("osc1 osc2 osc3 osc4 osc5 osc6 osc7 ocs8".split(" "), function (num, name) {
 				// Populate the oscillator
 				oscillators[num] = {
 						name: name,
@@ -102,7 +102,7 @@
 			});
 
 			oscillator = audioCtx.createOscillator();
-			oscillator.type = 'triangle';
+			oscillator.type = 'sine';
 			
 			console.log(oscillators);
 
@@ -124,63 +124,6 @@
 			document.addEventListener('keydown', playSound);
 			document.addEventListener('keyup', stopSound);
 		};
-	
-		
-		$('.white').mousedown(function(){
-			if (!playing) {
-				// Read the pressed key
-				var key = $(this).attr('id');
-				//console.log(event.srcElement);	
-				if(notes[key]) {
-					playing = true;
-					
-					oscillator.frequency.value = notes[key];
-					gainNode.gain.value = 5;
-					
-					console.log('Sound playing ' + key);
-				}
-			}
-
-		});
-
-		$('.white').mouseup(function(){
-			if (playing) {
-				playing = false;
-				
-				gainNode.gain.value = 0;
-				
-				console.log('Sound Stopped');
-			}
-
-		});
-
-		$('.black').mousedown(function(){
-			if (!playing) {
-				// Read the pressed key
-				var key = $(this).attr('id');
-				//console.log(event.srcElement);	
-				if(notes[key]) {
-					playing = true;
-					
-					oscillator.frequency.value = notes[key];
-					gainNode.gain.value = 5;
-					
-					console.log('Sound playing ' + key);
-				}
-			}
-
-		});
-
-		$('.black').mouseup(function(){
-			if (playing) {
-				playing = false;
-				
-				gainNode.gain.value = 0;
-				
-				console.log('Sound Stopped');
-			}
-
-		});
 
 		var playSound = function (event) {
 			if (!playing) {
@@ -191,7 +134,7 @@
 					playing = true;
 					
 					oscillator.frequency.value = notes[key];
-					gainNode.gain.value = 5;
+					gainNode.gain.value = 3;
 					
 					console.log('Sound playing ' + key);
 				}
@@ -212,6 +155,7 @@
 		 * Utility methods
 		 */
 
+		
 		return Synthesizer;
 	})();
 	

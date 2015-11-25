@@ -3,7 +3,7 @@
 	background-color: #FFF;
 	padding: 10px 20px;
 	margin: 0 auto;
-	width: 60%;
+	width: 70%;
 }
 header {
 	background-color: #4af;
@@ -13,6 +13,35 @@ header {
 	padding: 10px 20px;
 }
 
+input { display: block;}
+
+/* styling from http://jsfiddle.net/4bs8A/ */
+input[type=checkbox] {
+      margin-top: -30px;
+}
+
+input[type='checkbox'] {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeSpeed;
+    width: 50px;
+    height: 50px;
+    margin: 2px;
+    display: block;
+    position: relative;
+    cursor:pointer;
+}
+
+.grid div { 
+      display: block; 
+      float: left;
+    }
+
+ .grid {
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+    }
+/*
 #piano {
   width: 50%;
   height: 300px;
@@ -20,31 +49,6 @@ header {
   border-radius: 20px 20px 0 0;
   overflow: hidden;
   background: linear-gradient(#1e1d1d, #000);
-}
-#piano-container {
-  width: 95%;
-  height: 230px;
-  background: #fff;
-  margin: 60px auto 0 auto;
-}
-#piano-container li {
-  width: 14.28%;
-  height: 100%;
-  float: left;
-  list-style-type: none;
-  position: relative;
-}
-#piano .white {
-  width:100%;
-  height:100%;
-  float:left;
-  box-shadow:0 1px 1px rgba(0, 0, 0, .5);
-  position:relative;
-  z-index:1;
-  background:#f5f5f5;
-}
-#piano .white:active {
-  box-shadow:-1px 0 15px rgba(0, 0, 0, .7) inset;
 }
 #piano .black {
   position: absolute;
@@ -55,10 +59,10 @@ header {
   right: -35%;
   box-shadow: 1px 0 #111, 0 2px 0 #111, 0 3px 0 #333, 0 4px 0 #333, 0 5px 0 #333, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15);
 }
+
 #piano .black:active{
   box-shadow: 1px 0 #777, 0 2px 0 #777, 0 3px 0 #666, 0 4px 0 #555;
 }
-
 body {
   color: #333;
   background-color: #EEE; 
@@ -66,12 +70,13 @@ body {
   margin: 0;
   padding: 0; 
 }
+*/
+
 a {color: #09e; text-decoration: none;}
 a:hover {text-decoration: underline;}
 .wrapper {
   background-color: #FFF;
   padding: 10px 20px;
-  margin: 0 auto;
   width: 60%;
 }
 
