@@ -106,7 +106,7 @@
 			setupEventListeners();
 		};
 		
-		var setupAudioNodes = function (index) {
+		var setupAudioNodes = function (index, elem) {
 			time = audioCtx.currentTime;
   			fadeout = 1;
 			// Oscillator setup
@@ -130,15 +130,21 @@
 
 			
 			oscillator.frequency.value = frequencies[index];
+			console.log(frequencies[index]);
 
 			oscillator.start(time);
 			oscillator.stop(time + fadeout);
 			
-			console.log(oscillators);
+			//console.log(oscillators);
 
 			// Gain setup
 			gainNode = audioCtx.createGain();
-			gainNode.gain.value = 0.5;
+			gainNode.gain.value = 0;
+
+			gainNode.gain.linearRampToValueAtTime(0.1, time + 0.1);
+  			gainNode.gain.linearRampToValueAtTime(0.7, time + 0.250);
+  			gainNode.gain.linearRampToValueAtTime(0.05, time + 0.1);
+  			gainNode.gain.exponentialRampToValueAtTime(0.05, time + fadeout);
 			
 			// Destination init
 			soundOut = audioCtx.destination;
@@ -190,18 +196,17 @@
 		    //console.log('grid elem: ' + i);
 		    setTimeout(function() { 
 		      playNotesInColumn(i)
-		    }, index * 125); 
+		    }, index * 250); 
 		  });
 		}
 
 		function playNotesInColumn($elem) {
 		  $elem.children(':checked').each(function() {
-		    setupAudioNodes($(this).val() - 1);
+		  	//console.log($elem.attr('id'));
+		    setupAudioNodes($(this).val() - 1, $elem.attr('id')-1);
 		  });
 
-		  // Repeat this column every 2 seconds, since there are 16 columns at 125ms intervals. 
-		  // This simple implementation of timeout isn't really a long term solution, it will start 
-		  // lagging eventually if cpu is processing other things when timeout is supposed to fire
+		  // Repeat this column every 2 seconds, since there are 8 columns at 250ms intervals. 
 		  setTimeout(function() {
 		   playNotesInColumn($elem) 
 		  }, 2000);
