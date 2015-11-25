@@ -69,7 +69,7 @@
 	'1046.50', // c6
 	'1174.66']  // d6
 
-	frequencies.reverse();
+	//frequencies.reverse();
 
 	var Synthesizer = (function () {
 		/*
@@ -128,16 +128,17 @@
 			oscillator = audioCtx.createOscillator();
 			oscillator.type = 'sine';
 
-			// Gain setup
-			gainNode = audioCtx.createGain();
-			gainNode.gain.value = frequencies[index];
+			
+			oscillator.frequency.value = frequencies[index];
 
 			oscillator.start(time);
 			oscillator.stop(time + fadeout);
 			
 			console.log(oscillators);
 
-			
+			// Gain setup
+			gainNode = audioCtx.createGain();
+			gainNode.gain.value = 0.5;
 			
 			// Destination init
 			soundOut = audioCtx.destination;
